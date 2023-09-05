@@ -1,3 +1,5 @@
+import math
+
 import numpy as np
 def sum_vector_complex(vector_a, vector_b):
     c = []
@@ -18,14 +20,6 @@ def mult_scalar_vector_complex(scalar, vector):
     for i in range(len(vector)):
         c.append(scalar * vector[i])
     return c
-
-def print_data(data):
-    if isinstance(data[0], complex):  # Si es un vector
-        print("[" + ", ".join(str(x) for x in data) + "]")
-    else:  # Si es una matriz
-        for fila in data:
-            print(fila)
-
 
 def sum_matrix_complex(matrix_a, matrix_b):
     filas = len(matrix_a)
@@ -99,6 +93,37 @@ def matrix_action_vector(matrix, vector):
     result = mult_matrix(matrix, [[x] for x in vector])
     return [x[0] for x in result]
 
+def internal_product(vector_a, vector_b):
+    c = 0
+    vector_a = conjugate_matrix(vector_a)
+    if len(vector_a) == len(vector_b):
+        for i in range(len(vector_a)):
+            c += vector_a[i] * vector_b[i]
+        return c
+    return "Error, los vectores son de diferente tamaño"
+
+def norm_vector(vector):
+    return math.sqrt(internal_product(vector,vector).real)
+
+def distance_between_vectors(vector_a, vector_b):
+    return norm_vector(sum_vector_complex(vector_a,inv_add_vector_complex(vector_b)))
+
+def eigenvalues_and_eigenvectors(matrix):
+    try:
+        # Calcula los valores propios y vectores propios
+        eigenvalues, eigenvectors = np.linalg.eig(matrix)
+
+        return eigenvalues, eigenvectors
+    except Exception as e:
+        return str(e)
+
+def print_data(data):
+    if isinstance(data[0], complex):  # Si es un vector
+        print("[" + ", ".join(str(x) for x in data) + "]")
+    else:  # Si es una matriz
+        for fila in data:
+            print(fila)
+
 if __name__ == '__main__':
     print('Ejemplo suma de vectores complejos: ', sum_vector_complex([complex(-5,-5),complex(-4,4)],[complex(3,2),complex(5,1)]))
     print('Ejemplo inverso aditivo de un vector complejo: ', inv_add_vector_complex([complex(5,4),complex(2,4)]))
@@ -142,6 +167,22 @@ if __name__ == '__main__':
     print_data(matrix_action_vector([[complex(1, 2), complex(3, 4)],
                                      [complex(8, 4), complex(-2, 5)]],
                                     [complex(-1, 1), complex(2, 3)]))
+
+    print('Ejemplo producto iterno de vectores complejos: ', internal_product([complex(1, 0), complex(2, 3),complex(0,6)], [complex(0, 0), complex(0, 1),complex(2,4)]))
+
+    print('Ejemplo norma de un vector complejo: ', norm_vector([complex(4,3),complex(6,-4),complex(12,-7),complex(0,-13)]))
+
+    print('Ejemplo distancia entre dos vectores: ', distance_between_vectors([complex(0, 2), complex(3, 0),complex(0, 4)], [complex(0, 1), complex(-3, 0),complex(0, -5)]))
+
+    print('Ejemplo valores y vectores propios de una matriz: ')
+    matriz_ejemplo = np.array([[complex(0,0), complex(0,-2)],
+                               [complex(0,2), complex(0,0)]])  # Reemplaza esta matriz con la matriz de tu elección
+    eigenvalues, eigenvectors = eigenvalues_and_eigenvectors(matriz_ejemplo)
+    print("Valores propios:")
+    print_data(eigenvalues)
+    print("Vectores propios:")
+    print_data(eigenvectors)
+
 
 
 

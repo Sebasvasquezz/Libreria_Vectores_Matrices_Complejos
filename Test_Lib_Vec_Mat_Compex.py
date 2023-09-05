@@ -1,3 +1,5 @@
+import math
+
 import Lib_Vect_Mat_Complex as lvmc
 import unittest
 
@@ -157,6 +159,32 @@ class Test_operations_vector_matriz_complex(unittest.TestCase):
                                            [complex(-1, 1), complex(2, 3)])
         self.assertAlmostEqual(action[0], complex(-9, 16))
         self.assertAlmostEqual(action[1], complex(-31, 8))
+
+    def test_internal_product(self):
+        product = lvmc.internal_product([complex(1, 0), complex(2, 3),complex(0,6)],
+                                        [complex(0, 0), complex(0, 1),complex(2,4)])
+        self.assertAlmostEqual(product, complex(27,-10))
+
+    def test_internal_product2(self):
+        product = lvmc.internal_product([complex(1, 0), complex(5, 8), complex(-9, 15)],
+                                        [complex(0, 0), complex(0, 1), complex(2, 4)])
+        self.assertAlmostEqual(product, complex(50, -61))
+
+    def test_norm_vector(self):
+        norma = lvmc.norm_vector([complex(4,3),complex(6,-4),complex(12,-7),complex(0,-13)])
+        self.assertAlmostEqual(norma, math.sqrt(439))
+
+    def test_norm_vector2(self):
+        norma = lvmc.norm_vector([complex(3.1,7.1),complex(6.6,-6)])
+        self.assertAlmostEqual(norma, math.sqrt(139.58))
+
+    def test_distance_between_vectors(self):
+        dist = lvmc.distance_between_vectors([complex(0, 2), complex(3, 0),complex(0, 4)], [complex(0, 1), complex(-3, 0),complex(0, -5)])
+        self.assertAlmostEqual(dist, math.sqrt(118))
+
+    def test_distance_between_vectors2(self):
+        dist = lvmc.distance_between_vectors([complex(0, 2), complex(3, 0),complex(0, 4)], [complex(0, 1), complex(-3, 0),complex(0, -5)])
+        self.assertAlmostEqual(dist, math.sqrt(118))
 
 if __name__ == '__main__':
     unittest.main()
