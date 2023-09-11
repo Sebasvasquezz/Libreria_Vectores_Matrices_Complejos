@@ -25,7 +25,11 @@ La librería consta de las siguientes operaciones para vectores y matrices compl
 13. **Norma de un vector un vector:** `norm_vector(vector)`
 14. **Distancia entre dos vectores:** `distance_between_vectors(vector_a, vector_b)`
 15. **Valores y vectores propios de una matriz:** `eigenvalues_and_eigenvectors(matrix)`
-16. **Función para imprimir vectores y matrices de manera convencional:** `print_data(data)`
+16. **Revisar si una matriz es unitaria:** `unitary_matrix(matrix)`
+17. **Revisar si una matriz es hermitiana:** `hermitian_matrix(matrix)`
+18. **Producto tensor de dos vectores:** `tensor_product_vector(vector_a, vector_b)`
+19. **Producto tensor de dos matrices:** `tensor_product_matrix(matrix_a,matrix_b)`
+20. **Función para imprimir vectores y matrices de manera convencional:** `print_data(data)`
 
 ## Uso
 

@@ -1,5 +1,4 @@
 import math
-
 import numpy as np
 def sum_vector_complex(vector_a, vector_b):
     c = []
@@ -116,7 +115,46 @@ def eigenvalues_and_eigenvectors(matrix):
         return eigenvalues, eigenvectors
     except Exception as e:
         return str(e)
+def unitary_matrix(matrix):
+    filas = len(matrix)
+    columnas = len(matrix[0])
+    if filas != columnas:
+        return "Error, la matriz no es cuadrada"
+    matriz_identidad = [[1 if i == j else 0 for j in range(filas)] for i in range(columnas)]
+    new_matrix = mult_matrix(matrix,adjoint_matrix(matrix))
+    for i in range(filas):
+        for j in range(columnas):
+            if abs(new_matrix[i][j] - matriz_identidad[i][j]) > 1e-10:
+                return False
+    return True
+def hermitian_matrix(matrix):
+    filas = len(matrix)
+    columnas = len(matrix[0])
+    adjunta = adjoint_matrix(matrix)
+    for i in range(filas):                                            
+        for j in range(columnas):
+            if abs(matrix[i][j] - adjunta[i][j]) > 1e-10:
+                return False
+    return True
+def tensor_product_vector(vector_a, vector_b):
+    c = []
+    for i in range(len(vector_a)):
+        for j in range(len(vector_b)):
+            c.append(vector_a[i] * vector_b[j])
+    return c
 
+def tensor_product_matrix(matrix_a,matrix_b):
+    filas_a = len(matrix_a)
+    columnas_a = len(matrix_a[0])
+    filas_b = len(matrix_b)
+    columnas_b = len(matrix_b[0])
+    result_filas = filas_a*filas_b
+    result_columnas = columnas_a*columnas_b
+    result_matrix = [[0j] * result_columnas for m in range(result_filas)]
+    for j in range(result_filas):
+        for k in range(result_columnas):
+            result_matrix[j][k] = matrix_a[j//filas_b][k//columnas_b] * matrix_b[j%filas_b][k%columnas_b]
+    return result_matrix
 def print_data(data):
     if isinstance(data[0], complex):  # Si es un vector
         print("[" + ", ".join(str(x) for x in data) + "]")
@@ -176,12 +214,31 @@ if __name__ == '__main__':
 
     print('Ejemplo valores y vectores propios de una matriz: ')
     matriz_ejemplo = np.array([[complex(0,0), complex(0,-2)],
-                               [complex(0,2), complex(0,0)]])  # Reemplaza esta matriz con la matriz de tu elección
+                               [complex(0,2), complex(0,0)]])
     eigenvalues, eigenvectors = eigenvalues_and_eigenvectors(matriz_ejemplo)
     print("Valores propios:")
     print_data(eigenvalues)
     print("Vectores propios:")
     print_data(eigenvectors)
+
+    print('Ejemplo verificación matriz unitaria: ', unitary_matrix([[complex(1/math.sqrt(2), 0), complex(1/math.sqrt(2), 0)],
+                                                                     [complex(1/math.sqrt(2), 0), complex(-1/math.sqrt(2), 0)]]))
+
+    print('Ejemplo verificación matriz hermitiana: ', hermitian_matrix(([[complex(1/math.sqrt(2), 0), complex(1/math.sqrt(2), 0)],
+                                                                     [complex(1/math.sqrt(2), 0), complex(-1/math.sqrt(2), 0)]])))
+
+    print('Ejemplo producto tensor de vectores: ')
+    print_data(tensor_product_vector([complex(0, -5), complex(3, 4), complex(-2.1, 0)],
+                                     [complex(0, 2), complex(1, 6)]))
+
+    print('Ejemplo producto tensor de matrices: ')
+    print_data(tensor_product_matrix([[complex(5, -4), complex(1, -2)],
+                                              [complex(5, -2), complex(-4, -9)]],
+                                     [[complex(-5, -4), complex(-8, -2)],
+                                              [complex(5, -2), complex(7, -2)]]))
+
+
+
 
 
 

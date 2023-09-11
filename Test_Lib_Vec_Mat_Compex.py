@@ -186,5 +186,95 @@ class Test_operations_vector_matriz_complex(unittest.TestCase):
         dist = lvmc.distance_between_vectors([complex(0, 2), complex(3, 0),complex(0, 4)], [complex(0, 1), complex(-3, 0),complex(0, -5)])
         self.assertAlmostEqual(dist, math.sqrt(118))
 
+    def test_unitary_matrix(self):
+        unit = lvmc.unitary_matrix([[complex(1/math.sqrt(2), 0), complex(1/math.sqrt(2), 0)],
+                                    [complex(1/math.sqrt(2), 0), complex(-1/math.sqrt(2), 0)]])
+        self.assertAlmostEqual(unit, True)
+
+    def test_unitary_matrix2(self):
+        unit = lvmc.unitary_matrix([[complex(1/math.sqrt(2), -1), complex(1/math.sqrt(2), 0)],
+                                    [complex(1/math.sqrt(2), 0), complex(-1/math.sqrt(2), 0)]])
+        self.assertAlmostEqual(unit, False)
+
+    def test_hermitian_matrix(self):
+        unit = lvmc.unitary_matrix([[complex(1/math.sqrt(2), 0), complex(1/math.sqrt(2), 0)],
+                                    [complex(1/math.sqrt(2), 0), complex(-1/math.sqrt(2), 0)]])
+        self.assertAlmostEqual(unit, True)
+
+    def test_hermitian_matrix2(self):
+        unit = lvmc.unitary_matrix([[complex(1/math.sqrt(2), -1), complex(1/math.sqrt(2), 0)],
+                                    [complex(1/math.sqrt(2), 0), complex(-1/math.sqrt(2), 0)]])
+        self.assertAlmostEqual(unit, False)
+
+    def test_tensor_product_vector(self):
+        product = lvmc.tensor_product_vector([complex(0, 2), complex(1, 6)],
+                                            [complex(0, -5), complex(3, 4), complex(-2.1, 0)])
+        self.assertAlmostEqual(product[0], complex(10, 0))
+        self.assertAlmostEqual(product[1], complex(-8, 6))
+        self.assertAlmostEqual(product[2], complex(0, -4.2))
+        self.assertAlmostEqual(product[3], complex(30, -5))
+        self.assertAlmostEqual(product[4], complex(-21, 22))
+        self.assertAlmostEqual(product[5], complex(-2.1, -12.6))
+
+    def test_tensor_product_vector2(self):
+        product = lvmc.tensor_product_vector([complex(0, -5), complex(3, 4), complex(-2.1, 0)],
+                                                    [complex(0, 2), complex(1, 6)])
+        self.assertAlmostEqual(product[0], complex(10, 0))
+        self.assertAlmostEqual(product[1], complex(30, -5))
+        self.assertAlmostEqual(product[2], complex(-8, 6))
+        self.assertAlmostEqual(product[3], complex(-21, 22))
+        self.assertAlmostEqual(product[4], complex(0, -4.2))
+        self.assertAlmostEqual(product[5], complex(-2.1, -12.6))
+
+    def test_tensor_product_matrix(self):
+        product = lvmc.tensor_product_matrix([[complex(5, 4), complex(1, -2)],
+                                                      [complex(5, 2), complex(-4, 9)]],
+                                             [[complex(-5, 4), complex(-8, -2)],
+                                                      [complex(5, 2), complex(7, -2)]])
+        self.assertAlmostEqual(product[0][0], complex(-41, 0))
+        self.assertAlmostEqual(product[0][1], complex(-32, -42))
+        self.assertAlmostEqual(product[0][2], complex(3, 14))
+        self.assertAlmostEqual(product[0][3], complex(-12, 14))
+
+        self.assertAlmostEqual(product[1][0], complex(17, 30))
+        self.assertAlmostEqual(product[1][1], complex(43, 18))
+        self.assertAlmostEqual(product[1][2], complex(9, -8))
+        self.assertAlmostEqual(product[1][3], complex(3, -16))
+
+        self.assertAlmostEqual(product[2][0], complex(-33, 10))
+        self.assertAlmostEqual(product[2][1], complex(-36, -26))
+        self.assertAlmostEqual(product[2][2], complex(-16, -61))
+        self.assertAlmostEqual(product[2][3], complex(50,-64))
+
+        self.assertAlmostEqual(product[3][0], complex(21, 20))
+        self.assertAlmostEqual(product[3][1], complex(39, 4))
+        self.assertAlmostEqual(product[3][2], complex(-38, 37))
+        self.assertAlmostEqual(product[3][3], complex(-10, 71))
+
+    def test_tensor_product_matrix2(self):
+        product = lvmc.tensor_product_matrix([[complex(5, -4), complex(1, -2)],
+                                                      [complex(5, -2), complex(-4, -9)]],
+                                             [[complex(-5, -4), complex(-8, -2)],
+                                                      [complex(5, -2), complex(7, -2)]])
+        self.assertAlmostEqual(product[0][0], complex(-41, 0))
+        self.assertAlmostEqual(product[0][1], complex(-48, 22))
+        self.assertAlmostEqual(product[0][2], complex(-13, 6))
+        self.assertAlmostEqual(product[0][3], complex(-12, 14))
+
+        self.assertAlmostEqual(product[1][0], complex(17, -30))
+        self.assertAlmostEqual(product[1][1], complex(27, -38))
+        self.assertAlmostEqual(product[1][2], complex(1, -12))
+        self.assertAlmostEqual(product[1][3], complex(3, -16))
+
+        self.assertAlmostEqual(product[2][0], complex(-33, -10))
+        self.assertAlmostEqual(product[2][1], complex(-44, 6))
+        self.assertAlmostEqual(product[2][2], complex(-16, 61))
+        self.assertAlmostEqual(product[2][3], complex(14,80))
+
+        self.assertAlmostEqual(product[3][0], complex(21, -20))
+        self.assertAlmostEqual(product[3][1], complex(31, -24))
+        self.assertAlmostEqual(product[3][2], complex(-38, -37))
+        self.assertAlmostEqual(product[3][3], complex(-46, -55))
+
 if __name__ == '__main__':
     unittest.main()
